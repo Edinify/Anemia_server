@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, send_file
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
-import io
 import os
 
 plt.figure()
