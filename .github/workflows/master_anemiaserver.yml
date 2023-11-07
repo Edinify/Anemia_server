@@ -27,9 +27,12 @@ jobs:
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y libsm6 libxext6 ffmpeg libgl1-mesa-glx
         
+      - name: pip install
+        run:  pip install -r requirements.txt
 
       - name: Upgrade pip
-        run:  pip install --upgrade pip && pip install -r
+        run:  pip install --upgrade pip
+
 
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       - name: Zip artifact for deployment
