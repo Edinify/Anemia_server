@@ -68,7 +68,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def process_image():
     try:
         if 'file' not in request.files:
-            print(request.files,{"error": "No file part"})
+            # print(request.files,{"error": "No file part"})
             return jsonify({"error": "No file part"})
 
         file = request.files['file']
@@ -77,11 +77,11 @@ def process_image():
     
         if file:
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            print(filename)
-            print(file)
+            # print(filename)
+            print(file,"new")
             file.save(filename)
             res = Check_image(filename)
-            os.remove(f'./{file}')
+            # os.remove(f'./{file}')
         return res
 
     except Exception as e:
