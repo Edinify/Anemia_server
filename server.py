@@ -81,7 +81,7 @@ def process_image():
             file.save(filename)
             res = Check_image(filename)
             print(res)
-        return res
+        return jsonify(message=res)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
