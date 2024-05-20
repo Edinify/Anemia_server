@@ -42,7 +42,7 @@ def Check_image(file):
             elif col == 'b':
                 color_count_array_b.append(count[0])
             bin_Data.append(bin_value)
-
+    os.remove(f'./{file}')
     if max(color_count_array_r)  > max(color_count_array_b) and max(color_count_array_g) > max(color_count_array_b):
         res = "Analizlərimizə əsasən, təbriklər sizdə şüphəli hal görmədik"
     elif max(color_count_array_r)  < max(color_count_array_b) and max(color_count_array_g) < max(color_count_array_b):
@@ -77,11 +77,10 @@ def process_image():
     
         if file:
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            # print(filename)
-            print(file,"new")
+            
             file.save(filename)
             res = Check_image(filename)
-            # os.remove(f'./{file}')
+            print(res)
         return res
 
     except Exception as e:
