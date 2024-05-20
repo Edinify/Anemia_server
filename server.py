@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 from flask_cors import CORS
+app = Flask(__name__)
+CORS(app, origins=["*"])
 
 
 plt.figure()
@@ -12,17 +14,6 @@ plt.xlabel('Bins')
 plt.ylabel('# of pixels')
 colors = ('r','g','b')
 
-app = Flask(__name__)
-CORS(app, origins=["*"])
-
-
-# img = cv.imread('./anemiaEyes/newimg.jpeg')
-
-# blank = np.zeros(img.shape[:2], dtype='uint8')
-
-# mask = cv.circle(blank, (img.shape[1]//2,img.shape[0]//2), 100, 255, -1)
-
-app = Flask(__name__)
 
 
 hist_data = []
