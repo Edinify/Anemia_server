@@ -3,12 +3,17 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from flask_cors import CORS
+
 
 plt.figure()
 plt.title('Colour Histogram')
 plt.xlabel('Bins')
 plt.ylabel('# of pixels')
 colors = ('r','g','b')
+
+app = Flask(__name__)
+CORS(app, origins=["*"])
 
 
 # img = cv.imread('./anemiaEyes/newimg.jpeg')
