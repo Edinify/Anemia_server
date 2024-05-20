@@ -24,6 +24,7 @@ hist_data = []
 color_count_array_r = []
 color_count_array_g = []
 color_count_array_b = []
+res = ''
 # max_number_r, max_number_g, max_number_b =[]
 bin_Data = []
 def Check_image(file):
@@ -45,14 +46,16 @@ def Check_image(file):
                 color_count_array_b.append(count[0])
             bin_Data.append(bin_value)
 
+    if max(color_count_array_r)  > max(color_count_array_b) and max(color_count_array_g) > max(color_count_array_b):
+        res = "Analizlərimizə əsasən, təbriklər sizdə şüphəli hal görmədik"
+    elif max(color_count_array_r)  < max(color_count_array_b) and max(color_count_array_g) < max(color_count_array_b):
+        res = "Analizlərimizə əsasən, sizin anemiya olma ehtimalınız var"
+
+    return res
     for i,col in enumerate(colors):
             hist = cv.calcHist([img], [i], mask, [256], [0,256])
     plt.plot(hist, color=col)
     plt.xlim([0,256])
-
-    # max_number_r =  max(color_count_array_r)
-    # max_number_g =  max(color_count_array_g)
-    # max_number_b =  max(color_count_array_b)
 
 @app.route("/")
 def hello_world():
@@ -80,9 +83,9 @@ def process_image():
             print(filename)
             print(file)
             file.save(filename)
-            Check_image(filename)
+            res = Check_image(filename)
 
-        return f"red {max(color_count_array_r)}, green{max(color_count_array_g)}, blue{max(color_count_array_b)}"
+        return res
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
