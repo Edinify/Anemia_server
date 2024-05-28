@@ -14,6 +14,8 @@ plt.ylabel('# of pixels')
 colors = ('r','g','b')
 
 
+
+
 def Check_image(file):
     res = ''
     color_count_array_r = []
