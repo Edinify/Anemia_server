@@ -6,7 +6,6 @@ import os
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, origins=["*"])
-# sdsds
 
 plt.figure()
 plt.title('Colour Histogram')
