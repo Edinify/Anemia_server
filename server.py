@@ -16,23 +16,21 @@ colors = ('r','g','b')
 
 
 
-hist_data = []
-color_count_array_r = []
-color_count_array_g = []
-color_count_array_b = []
-res = ''
-# max_number_r, max_number_g, max_number_b =[]
-bin_Data = []
+
 def Check_image(file):
+    res = ''
+    color_count_array_r = []
+    color_count_array_g = []
+    color_count_array_b = []
+    hist_data = []
+    bin_Data = []
     img = cv.imread(f'./{file}')
-    
+    # print(img)
     blank = np.zeros(img.shape[:2], dtype='uint8')
     mask = cv.circle(blank, (img.shape[1]//2,img.shape[0]//2), 100, 255, -1)
     for i, col in enumerate(colors):
             hist = cv.calcHist([img], [i], mask, [256], [0, 256])
             hist_data.append(hist)
-        # print(hist_data)
-        
     for i, col in enumerate(colors):
         for bin_value, count in enumerate(hist_data[i]):
             if col == 'r':
@@ -43,16 +41,13 @@ def Check_image(file):
                 color_count_array_b.append(count[0])
             bin_Data.append(bin_value)
     os.remove(f'./{file}')
+    print(max(color_count_array_r),max(color_count_array_b), max(color_count_array_g),max(color_count_array_b))
     if max(color_count_array_r)  > max(color_count_array_b) and max(color_count_array_g) > max(color_count_array_b):
         res = "Analizlərimizə əsasən, təbriklər sizdə şüphəli hal görmədik"
     elif max(color_count_array_r)  < max(color_count_array_b) and max(color_count_array_g) < max(color_count_array_b):
         res = "Analizlərimizə əsasən, sizin anemiya olma ehtimalınız var"
 
     return res
-    for i,col in enumerate(colors):
-            hist = cv.calcHist([img], [i], mask, [256], [0,256])
-    plt.plot(hist, color=col)
-    plt.xlim([0,256])
 
 @app.route("/")
 def hello_world():
@@ -68,7 +63,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def process_image():
     try:
         if 'file' not in request.files:
-            # print(request.files,{"error": "No file part"})
             return jsonify({"error": "No file part"})
 
         file = request.files['file']
@@ -81,7 +75,7 @@ def process_image():
             file.save(filename)
             res = Check_image(filename)
             print(res)
-        return jsonify(message=res)
+        return jsonify({'message': str(res)})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
